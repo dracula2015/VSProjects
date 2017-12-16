@@ -96,7 +96,7 @@ Matrix *m_minus(Matrix*m,Matrix*n)
     {
         for(j=0;j<3;j++)
         {
-            temp->triMatrix[i][j] = m->triMatrix[i][i] - n->triMatrix[i][j];
+            temp->triMatrix[i][j] = m->triMatrix[i][j] - n->triMatrix[i][j];
         }
     }
     return temp;
