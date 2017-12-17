@@ -28,7 +28,7 @@ int main()
 	Vector3f* ddqd = v_constructor(NULL, 2, 3, 4);
 	Vector3f* q = v_constructor(NULL, 5, 6, 7);
 	Vector3f* dq = v_constructor(NULL, 1, 5, 9);
-	Vector3f* u= _constructor(NULL, 10, 25, 39);
+	Vector3f* u= v_constructor(NULL, 10, 25, 39);
 	P.m = 11.4;
 	P.Iv = 0.65;
 	P.r = 0.05;
