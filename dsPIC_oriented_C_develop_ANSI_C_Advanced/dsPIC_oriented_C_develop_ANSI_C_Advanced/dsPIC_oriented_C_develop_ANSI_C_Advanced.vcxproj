@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D53A792D-1E7B-4B20-8A47-96114F905742}</ProjectGuid>
-    <RootNamespace>dsPIC_oriented_C_develop_ANSI_C</RootNamespace>
+    <ProjectGuid>{74369B1C-F009-4CA2-BCFF-2C954EEE1AA9}</ProjectGuid>
+    <RootNamespace>dsPIC_oriented_C_develop_ANSI_C_Advanced</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -116,10 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="controller.c" />
-    <ClCompile Include="dsPIC_oriented_C_develop.c" />
+    <ClCompile Include="dsPIC_oriented_C_develop_advanced.c" />
     <ClCompile Include="matrix.c" />
-    <ClCompile Include="model.c" />
-    <ClCompile Include="testCode.c" />
+    <ClCompile Include="oriented_c_controller.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

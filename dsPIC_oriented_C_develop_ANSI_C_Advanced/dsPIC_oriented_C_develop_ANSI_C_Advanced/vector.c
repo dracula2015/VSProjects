@@ -19,11 +19,13 @@ void v_destructor(Vector3f*v, bool dynamic)
 
 Vector3f *v_plus(Vector3f*v,Vector3f*w)
 {
+    //Vector3f *temp = NULL;
     return v_constructor(NULL, v->x + w->x, v->y + w->y, v->z + w->z);
 }
 
 Vector3f *v_minus(Vector3f*v,Vector3f*w)
 {
+    //Vector3f *temp = NULL;
     return v_constructor(NULL, v->x - w->x, v->y - w->y, v->z - w->z);
 }
 
@@ -34,6 +36,7 @@ float v_v_multiply(Vector3f*v,Vector3f*w)
 
 Vector3f *v_s_multiply(Vector3f*v,float s)
 {
+    //Vector3f *temp = NULL;
     return v_constructor(NULL, v->x * s, v->y * s, v->z * s);
 }
 
@@ -66,16 +69,22 @@ Vector3f *v_constructor(Vector3f*v, float x, float y, float z)
         v = pointerVector[countVector];
         countVector++;
     }
-
+        /*
+    Vector3f *w;
+    if(v == NULL)
+    {
+        v = w;
+    }
+    */
     v->x = x;
     v->y = y;
     v->z = z;
-    //v->v_plus = v_plus;
-    //v->v_minus = v_minus;
-    //v->v_v_multiply = v_v_multiply;
-    //v->v_s_multiply = v_s_multiply;
-    //v->v_equal = v_equal;
-    //v->v_length = v_length;
-    //v->v_normalize = v_normalize;
+    v->v_plus = v_plus;
+    v->v_minus = v_minus;
+    v->v_v_multiply = v_v_multiply;
+    v->v_s_multiply = v_s_multiply;
+    v->v_equal = v_equal;
+    v->v_length = v_length;
+    v->v_normalize = v_normalize;
     return v;
 }

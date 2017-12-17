@@ -29,19 +29,16 @@
     <ClCompile Include="controller.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dsPIC_oriented_C_develop.c">
+    <ClCompile Include="matrix.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="matrix.c">
+    <ClCompile Include="oriented_c_controller.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vector.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testCode.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="model.c">
+    <ClCompile Include="dsPIC_oriented_C_develop_advanced.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

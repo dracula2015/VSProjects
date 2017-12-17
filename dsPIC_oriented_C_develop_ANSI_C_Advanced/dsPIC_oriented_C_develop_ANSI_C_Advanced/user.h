@@ -1,9 +1,12 @@
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
-#ifndef XC_HEADER_USER_H
-#define XC_HEADER_USER_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>        /* Includes uint16_t definition                    */
+#include <stdbool.h>       /* Includes true/false definition                  */
+#include <math.h>
 #include "matrix.h"
 #include "vector.h"
 
@@ -16,7 +19,7 @@
 /* TODO User level functions prototypes (i.e. InitApp) go here */
 
 Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f *q, Vector3f *dq);
-Vector3f *OMRS_model(Vector3f *u, Vector3f *q, Vector3f *dq);
+//Vector3f OMRS_model(Vector3f *u, Vector3f *q, Vector3f *dq);
 typedef struct Parameter
 {
     float m;
@@ -35,5 +38,3 @@ typedef struct Parameter
     float beta1;
     float beta2;
 }Parameter;
-
-#endif

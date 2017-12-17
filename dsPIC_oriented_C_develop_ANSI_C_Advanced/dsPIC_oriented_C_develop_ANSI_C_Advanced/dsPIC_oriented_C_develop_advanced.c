@@ -23,12 +23,13 @@ int main()
 
 	Kp = m_constructor(NULL, NULL, 6, 0, 0, 0, 6, 0, 0, 0, 6);
 	Kd = m_constructor(NULL, NULL, 10, 0, 0, 0, 10, 0, 0, 0, 10);
+
 	Vector3f* qd = v_constructor(NULL, 1, 2, 3);
 	Vector3f* dqd = v_constructor(NULL, 4, 5, 6);
 	Vector3f* ddqd = v_constructor(NULL, 2, 3, 4);
 	Vector3f* q = v_constructor(NULL, 5, 6, 7);
 	Vector3f* dq = v_constructor(NULL, 1, 5, 9);
-	Vector3f* u= _constructor(NULL, 10, 25, 39);
+
 	P.m = 11.4;
 	P.Iv = 0.65;
 	P.r = 0.05;
@@ -48,12 +49,10 @@ int main()
 	P.beta2 = P.n*P.kt / P.r / P.Ra;
 
 	Vector3f *controlEffect;
-	Vector3f *modelState;
 	int a;
 	while (1) {
 		scanf_s("%d", &a);
 		controlEffect = OMRS_controller(qd, dqd, ddqd, q, dq);
-		modelState = OMRS_model(u, q, dq);
 		printf("Kp\n");
 		printf("%f,%f,%f\n", Kp->triMatrix[0][0], Kp->triMatrix[0][1], Kp->triMatrix[0][2]);
 		printf("%f,%f,%f\n", Kp->triMatrix[1][0], Kp->triMatrix[1][1], Kp->triMatrix[1][2]);

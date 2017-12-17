@@ -1,15 +1,15 @@
 /*
- * File:   controller.c
+ * File:   oriented_c_controller.c
  * Author: dracula
  *
- * Created on January 6, 2017, 11:58 PM
+ * Created on December 12, 2017, 11:50 PM
  */
 
 #include "user.h"
 extern Parameter P;
 extern Matrix *Kp;
 extern Matrix *Kd;
-Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f *q, Vector3f *dq)
+Vector3f *Oriented_OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f *q, Vector3f *dq)
 {
     Vector3f *temp;
     Vector3f *uavc;
@@ -38,15 +38,15 @@ Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f 
 		RavcRev->triMatrix[0][0], RavcRev->triMatrix[0][1], RavcRev->triMatrix[0][2],
 		RavcRev->triMatrix[1][0], RavcRev->triMatrix[1][1], RavcRev->triMatrix[1][2],
 		RavcRev->triMatrix[2][0], RavcRev->triMatrix[2][1], RavcRev->triMatrix[2][2]);
-    Matrix *Mavc = m_m_multiply(M2avc,RavcRev);
+    Matrix *Mavc = M2avc->m_m_multiply(M2avc,RavcRev);
 	printf("Mavc: %f,%f,%f\n%f,%f,%f\n%f,%f,%f\n",
 		Mavc->triMatrix[0][0], Mavc->triMatrix[0][1], Mavc->triMatrix[0][2],
 		Mavc->triMatrix[1][0], Mavc->triMatrix[1][1], Mavc->triMatrix[1][2],
 		Mavc->triMatrix[2][0], Mavc->triMatrix[2][1], Mavc->triMatrix[2][2]);
-    Matrix *Cavc = m_minus(m_m_multiply(C2avc,RavcRev),m_m_multiply(M2avc,m_m_multiply(RavcRev,m_m_multiply(DRavc,RavcRev)))); 
-	Matrix *tm1 = m_m_multiply(C2avc, RavcRev);
-	Matrix * tm2 = m_m_multiply(M2avc, RavcRev);
-	Matrix * tm3 = m_m_multiply(M2avc, m_m_multiply(RavcRev, m_m_multiply(DRavc, RavcRev)));
+    Matrix *Cavc = m_minus(C2avc->m_m_multiply(C2avc,RavcRev),M2avc->m_m_multiply(M2avc,RavcRev->m_m_multiply(RavcRev,DRavc->m_m_multiply(DRavc,RavcRev)))); 
+	Matrix *tm1 = C2avc->m_m_multiply(C2avc, RavcRev);
+	Matrix * tm2 = M2avc->m_m_multiply(M2avc, RavcRev);
+	Matrix * tm3 = M2avc->m_m_multiply(M2avc, RavcRev->m_m_multiply(RavcRev, DRavc->m_m_multiply(DRavc, RavcRev)));
 	printf("C2avc*RavcRev\': %f,%f,%f\n%f,%f,%f\n%f,%f,%f\n", 
 		tm1->triMatrix[0][0], tm1->triMatrix[0][1], tm1->triMatrix[0][2],
 		tm1->triMatrix[1][0], tm1->triMatrix[1][1], tm1->triMatrix[1][2],
@@ -69,12 +69,12 @@ Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f 
 		BavcOri->triMatrix[0][0], BavcOri->triMatrix[0][1], BavcOri->triMatrix[0][2],
 		BavcOri->triMatrix[1][0], BavcOri->triMatrix[1][1], BavcOri->triMatrix[1][2],
 		BavcOri->triMatrix[2][0], BavcOri->triMatrix[2][1], BavcOri->triMatrix[2][2]);
-    Matrix *Bavc = m_s_multiply(BavcOri,P.beta2);
+    Matrix *Bavc = BavcOri->m_s_multiply(BavcOri,P.beta2);
 	printf("Bavc: %f,%f,%f\n%f,%f,%f\n%f,%f,%f\n",
 		Bavc->triMatrix[0][0], Bavc->triMatrix[0][1], Bavc->triMatrix[0][2],
 		Bavc->triMatrix[1][0], Bavc->triMatrix[1][1], Bavc->triMatrix[1][2],
 		Bavc->triMatrix[2][0], Bavc->triMatrix[2][1], Bavc->triMatrix[2][2]);
-    temp = m_v_multiply(m_inverse(Bavc),m_v_multiply(Mavc,v_minus(ddqd,v_plus(m_v_multiply(Kd,v_minus(dq,dqd)),m_v_multiply(Kp,v_minus(q,qd))))));
+    temp = m_v_multiply(Bavc->m_inverse(Bavc),Mavc->m_v_multiply(Mavc,ddqd->v_minus(ddqd,v_plus(Kd->m_v_multiply(Kd,qd->v_minus(dq,dqd)),Kp->m_v_multiply(Kp,q->v_minus(q,qd))))));
     uavc = v_plus(temp,m_v_multiply(m_m_multiply(m_inverse(Bavc),Cavc),dq));
 	printf("uavc: %f,%f,%f\n", uavc->x, uavc->y, uavc->z);
     

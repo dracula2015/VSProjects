@@ -11,12 +11,23 @@ extern Matrix *pointerMatrix[];
 //Matrix *m_constructor(Matrix*m, float *triMatrix[3][3], float x11=0, float x12=0, float x13=0, float x21=0, float x22=0, float x23=0, float x31=0, float x32=0, float x33=0)
 Matrix *m_constructor(Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33)
 {
+//    _LATA0=1;
+
     if(m == NULL)
     {
         pointerMatrix[countMatrix] = (Matrix*)malloc(sizeof(Matrix));
         m = pointerMatrix[countMatrix];
         countMatrix++;
     }
+
+    /*
+    Matrix *n;
+    if(m == NULL)
+    {
+        m = n;
+    }
+    */
+//    _LATA1=1;
 
     int i,j;
     if(triMatrix == NULL)
@@ -41,14 +52,15 @@ Matrix *m_constructor(Matrix*m, float triMatrix[3][3], float x11, float x12, flo
         }
     };
     }
-    //m->m_plus = m_plus;
-    //m->m_minus = m_minus;
-    //m->m_m_multiply = m_m_multiply;
-    //m->m_v_multiply = m_v_multiply;
-    //m->m_s_multiply = m_s_multiply;
-    //m->m_determinant = m_determinant;
-    //m->m_cofactor = m_cofactor;
-    //m->m_inverse = m_inverse;
+    m->m_plus = m_plus;
+    m->m_minus = m_minus;
+    m->m_m_multiply = m_m_multiply;
+    m->m_v_multiply = m_v_multiply;
+    m->m_s_multiply = m_s_multiply;
+    m->m_determinant = m_determinant;
+    m->m_cofactor = m_cofactor;
+    m->m_inverse = m_inverse;
+//    _LATA8=1;
     return m;
 };
 
@@ -152,7 +164,6 @@ Matrix *m_inverse(Matrix *m)
 {
     Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     float deter = m_determinant(m);
-    /*temp = m_cofactor(m)->m_s_multiply(m_cofactor(m),1/deter);*/
-	temp = m_s_multiply(m_cofactor(m), 1 / deter);
+    temp = m_cofactor(m)->m_s_multiply(m_cofactor(m),1/deter);
     return temp;
 }
