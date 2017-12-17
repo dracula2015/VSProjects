@@ -79,8 +79,8 @@ Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f 
     temp = m_v_multiply(m_inverse(Bavc),m_v_multiply(Mavc,v_minus(ddqd,v_plus(m_v_multiply(Kd,v_minus(dq,dqd)),m_v_multiply(Kp,v_minus(q,qd))))));
     uavc = v_plus(temp,m_v_multiply(m_m_multiply(m_inverse(Bavc),Cavc),dq));
 	printf("uavc: %f,%f,%f\n", uavc->x, uavc->y, uavc->z);
-    /*
-    m_destructor(Ravc,1);
+    
+    /*m_destructor(Ravc,1);
     m_destructor(DRavc,1); 
     m_destructor(M2avc,1);
     m_destructor(C2avc,1);
@@ -88,7 +88,7 @@ Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f 
     m_destructor(Mavc,1);
     m_destructor(Cavc,1);
     m_destructor(BavcOri,1);
-    m_destructor(Bavc,1);
-    */
+    m_destructor(Bavc,1);*/
+    
     return uavc;
 }

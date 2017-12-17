@@ -48,11 +48,11 @@ int main()
 	P.beta1 = pow(P.n, 2) * (P.b0 + P.kt*P.kb / P.Ra) / pow(P.r, 2);
 	P.beta2 = P.n*P.kt / P.r / P.Ra;
 
-	Vector3f *controlEffect = OMRS_controller(qd, dqd, ddqd, q, dq);
+	Vector3f *controlEffect;
 	int a;
 	while (1) {
-		scanf_s("%d", &a);
-
+		//scanf_s("%d", &a);
+		controlEffect = OMRS_controller(qd, dqd, ddqd, q, dq);
 		printf("Kp\n");
 		printf("%f,%f,%f\n", Kp->triMatrix[0][0], Kp->triMatrix[0][1], Kp->triMatrix[0][2]);
 		printf("%f,%f,%f\n", Kp->triMatrix[1][0], Kp->triMatrix[1][1], Kp->triMatrix[1][2]);
@@ -105,15 +105,27 @@ int main()
 			printf("pointerMatrix %d: %p\n", i,pointerMatrix[i]);
 		}
 
+
+		for (counter = 3; counter <= countMatrix; counter++)
+		{
+			m_destructor(pointerMatrix[counter - 1], 1);
+		};
+		for (counter = 6; counter <= countVector; counter++)
+		{
+			v_destructor(pointerVector[counter - 1], 1);
+		}
+		countMatrix = 2;
+		countVector = 5;
+
 	}
-	for (counter = 1; counter <= countMatrix; counter++)
-	{
-		m_destructor(pointerMatrix[counter - 1], 1);
-	};
-	for (counter = 1; counter <= countVector; counter++)
-	{
-		v_destructor(pointerVector[counter - 1], 1);
-	}
+	//for (counter = 1; counter <= countMatrix; counter++)
+	//{
+	//	m_destructor(pointerMatrix[counter - 1], 1);
+	//};
+	//for (counter = 1; counter <= countVector; counter++)
+	//{
+	//	v_destructor(pointerVector[counter - 1], 1);
+	//}
     return 0;
 }
 
