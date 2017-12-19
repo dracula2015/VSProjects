@@ -9,6 +9,9 @@
 #ifndef XC_HEADER_VECTOR_H
 #define	XC_HEADER_VECTOR_H
 
+//#define printDetail
+//#define printTimeConsumption
+
 #define global true
 #define local false
 // TODO Insert appropriate #include <>
@@ -20,7 +23,7 @@
 #include <math.h>
 
 //object oriented c
-extern int countVector;
+//extern int countVector;
 
 typedef struct Vector3f
 {

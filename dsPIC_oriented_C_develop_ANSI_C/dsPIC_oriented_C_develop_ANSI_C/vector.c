@@ -7,7 +7,9 @@
 
 #include "user.h"
 extern int countVector;
+extern int countVectorGlobal;
 extern Vector3f *pointerVector[];
+extern Vector3f *pointerVectorGlobal[];
 
 void v_destructor(Vector3f*v, bool dynamic)
 {
@@ -65,10 +67,20 @@ Vector3f *v_constructor(bool globalVector, Vector3f*v, float x, float y, float z
 {
     if(v == NULL)
     {
-        pointerVector[countVector] = (Vector3f*)malloc(sizeof(Vector3f));
-        v = pointerVector[countVector];
-		v->thisVectorAddress = countVector;
-        countVector++;
+		if(!globalVector)
+		{
+			pointerVector[countVector] = (Vector3f*)malloc(sizeof(Vector3f));
+			v = pointerVector[countVector];
+			v->thisVectorAddress = countVector;
+			countVector++;
+		}
+		else 
+		{
+			pointerVectorGlobal[countVectorGlobal] = (Vector3f*)malloc(sizeof(Vector3f));
+			v = pointerVectorGlobal[countVectorGlobal];
+			v->thisVectorAddress = countVectorGlobal;
+			countVectorGlobal++;
+		}
     }
 
 	v->globalVector = globalVector;

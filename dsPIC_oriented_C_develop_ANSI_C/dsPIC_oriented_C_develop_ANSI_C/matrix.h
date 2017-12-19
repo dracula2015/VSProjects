@@ -14,7 +14,7 @@
 #include "vector.h"
 
 //object oriented c
-extern int countMatrix;
+//extern int countMatrix;
 
 typedef struct Matrix
 {

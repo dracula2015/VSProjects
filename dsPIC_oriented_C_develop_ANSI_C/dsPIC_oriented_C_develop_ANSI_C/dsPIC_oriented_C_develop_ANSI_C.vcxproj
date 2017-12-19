@@ -119,7 +119,6 @@
     <ClCompile Include="dsPIC_oriented_C_develop.c" />
     <ClCompile Include="matrix.c" />
     <ClCompile Include="model.c" />
-    <ClCompile Include="testCode.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

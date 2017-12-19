@@ -7,17 +7,28 @@
 
 #include "user.h"
 extern int countMatrix;
+extern int countMatrixGlobal;
 extern Matrix *pointerMatrix[];
+extern Matrix *pointerMatrixGlobal[];
 //Matrix *m_constructor(Matrix*m, float *triMatrix[3][3], float x11=0, float x12=0, float x13=0, float x21=0, float x22=0, float x23=0, float x31=0, float x32=0, float x33=0)
 Matrix *m_constructor(bool globalMatrix, Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33)
 {
     if(m == NULL)
     {
-        pointerMatrix[countMatrix] = (Matrix*)malloc(sizeof(Matrix));
-        m = pointerMatrix[countMatrix];
-		m->thisMatrixAddress = countMatrix;
-        countMatrix++;
-    }
+		if (!globalMatrix)
+		{
+			pointerMatrix[countMatrix] = (Matrix*)malloc(sizeof(Matrix));
+			m = pointerMatrix[countMatrix];
+			m->thisMatrixAddress = countMatrix;
+			countMatrix++;
+		}
+		else {
+			pointerMatrixGlobal[countMatrixGlobal] = (Matrix*)malloc(sizeof(Matrix));
+			m = pointerMatrixGlobal[countMatrixGlobal];
+			m->thisMatrixAddress = countMatrixGlobal;
+			countMatrixGlobal++;
+		}
+	}
 
 	m->globalMatrix = globalMatrix;
     int i,j;
