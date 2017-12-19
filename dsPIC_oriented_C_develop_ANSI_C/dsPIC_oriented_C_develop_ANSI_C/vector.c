@@ -13,18 +13,21 @@ void v_destructor(Vector3f*v, bool dynamic)
 {
     if(dynamic)
     {
-        free(v);
+		if (v->globalVector == false)
+		{
+			free(v);
+		}
     }
 }
 
 Vector3f *v_plus(Vector3f*v,Vector3f*w)
 {
-    return v_constructor(NULL, v->x + w->x, v->y + w->y, v->z + w->z);
+    return v_constructor(local, NULL, v->x + w->x, v->y + w->y, v->z + w->z);
 }
 
 Vector3f *v_minus(Vector3f*v,Vector3f*w)
 {
-    return v_constructor(NULL, v->x - w->x, v->y - w->y, v->z - w->z);
+    return v_constructor(local, NULL, v->x - w->x, v->y - w->y, v->z - w->z);
 }
 
 float v_v_multiply(Vector3f*v,Vector3f*w)
@@ -34,7 +37,7 @@ float v_v_multiply(Vector3f*v,Vector3f*w)
 
 Vector3f *v_s_multiply(Vector3f*v,float s)
 {
-    return v_constructor(NULL, v->x * s, v->y * s, v->z * s);
+    return v_constructor(local, NULL, v->x * s, v->y * s, v->z * s);
 }
 
 Vector3f *v_equal(Vector3f*v,Vector3f*w)
@@ -58,15 +61,17 @@ void v_normalize(Vector3f*v)
     v->z /= len;
 }
 
-Vector3f *v_constructor(Vector3f*v, float x, float y, float z)
+Vector3f *v_constructor(bool globalVector, Vector3f*v, float x, float y, float z)
 {
     if(v == NULL)
     {
         pointerVector[countVector] = (Vector3f*)malloc(sizeof(Vector3f));
         v = pointerVector[countVector];
+		v->thisVectorAddress = countVector;
         countVector++;
     }
 
+	v->globalVector = globalVector;
     v->x = x;
     v->y = y;
     v->z = z;

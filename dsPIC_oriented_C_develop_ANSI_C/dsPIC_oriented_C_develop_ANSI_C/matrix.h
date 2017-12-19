@@ -14,10 +14,15 @@
 #include "vector.h"
 
 //object oriented c
+extern int countMatrix;
 
 typedef struct Matrix
 {
     float triMatrix[3][3];
+
+	int thisMatrixAddress;
+
+	bool globalMatrix;
     
     //struct Matrix *(*m_constructor)(struct Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33);
 
@@ -41,7 +46,7 @@ typedef struct Matrix
 }Matrix;
 
 // TODO Insert declarations
-Matrix *m_constructor(Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33);
+Matrix *m_constructor(bool globalMatrix, Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33);
 
 void m_destructor(Matrix*m, bool dynamic);
 

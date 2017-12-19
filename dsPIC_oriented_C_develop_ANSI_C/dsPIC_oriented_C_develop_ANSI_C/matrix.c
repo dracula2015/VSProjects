@@ -9,15 +9,17 @@
 extern int countMatrix;
 extern Matrix *pointerMatrix[];
 //Matrix *m_constructor(Matrix*m, float *triMatrix[3][3], float x11=0, float x12=0, float x13=0, float x21=0, float x22=0, float x23=0, float x31=0, float x32=0, float x33=0)
-Matrix *m_constructor(Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33)
+Matrix *m_constructor(bool globalMatrix, Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33)
 {
     if(m == NULL)
     {
         pointerMatrix[countMatrix] = (Matrix*)malloc(sizeof(Matrix));
         m = pointerMatrix[countMatrix];
+		m->thisMatrixAddress = countMatrix;
         countMatrix++;
     }
 
+	m->globalMatrix = globalMatrix;
     int i,j;
     if(triMatrix == NULL)
     {
@@ -56,14 +58,17 @@ void m_destructor(Matrix*m, bool dynamic)
 {
     if(dynamic)
     {
-        free(m);
+		if (m->globalMatrix == false)
+		{
+			free(m);
+		}
     }
 };
 
 Matrix *m_plus(Matrix*m,Matrix*n)
 {
     int i,j;
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     for(i=0;i<3;i++)
     {
         for(j=0;j<3;j++)
@@ -77,7 +82,7 @@ Matrix *m_plus(Matrix*m,Matrix*n)
 Matrix *m_minus(Matrix*m,Matrix*n)
 {    
     int i,j;
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     for(i=0;i<3;i++)
     {
         for(j=0;j<3;j++)
@@ -92,7 +97,7 @@ Matrix *m_m_multiply(Matrix*m,Matrix*n)
 {
 
     int i,j;
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     for(i=0;i<3;i++)
     {
         for(j=0;j<3;j++)
@@ -105,7 +110,7 @@ Matrix *m_m_multiply(Matrix*m,Matrix*n)
 
 Vector3f *m_v_multiply(Matrix*m,Vector3f *v)
 {
-    Vector3f *temp = v_constructor(NULL, 0, 0, 0);
+    Vector3f *temp = v_constructor(local, NULL, 0, 0, 0);
     temp->x = m->triMatrix[0][0] * v->x + m->triMatrix[0][1] * v->y + m->triMatrix[0][2] * v->z;
     temp->y = m->triMatrix[1][0] * v->x + m->triMatrix[1][1] * v->y + m->triMatrix[1][2] * v->z;
     temp->z = m->triMatrix[2][0] * v->x + m->triMatrix[2][1] * v->y + m->triMatrix[2][2] * v->z;
@@ -115,7 +120,7 @@ Vector3f *m_v_multiply(Matrix*m,Vector3f *v)
 Matrix *m_s_multiply(Matrix*m,float s)
 {
     int i,j;
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     for(i=0;i<3;i++)
     {
         for(j=0;j<3;j++)
@@ -134,7 +139,7 @@ float m_determinant(Matrix *m)
 
 Matrix *m_cofactor(Matrix *m)
 {
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     temp->triMatrix[0][0] = m->triMatrix[1][1] * m->triMatrix[2][2]- m->triMatrix[1][2] * m->triMatrix[2][1];
 	temp->triMatrix[0][1] = -(m->triMatrix[0][1] * m->triMatrix[2][2] - m->triMatrix[2][1] * m->triMatrix[0][2]);
 	temp->triMatrix[0][2] = m->triMatrix[0][1] * m->triMatrix[1][2] - m->triMatrix[1][1] * m->triMatrix[0][2];
@@ -150,7 +155,7 @@ Matrix *m_cofactor(Matrix *m)
 
 Matrix *m_inverse(Matrix *m)
 {
-    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    Matrix *temp = m_constructor(local, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     float deter = m_determinant(m);
     /*temp = m_cofactor(m)->m_s_multiply(m_cofactor(m),1/deter);*/
 	temp = m_s_multiply(m_cofactor(m), 1 / deter);

@@ -9,6 +9,8 @@
 #ifndef XC_HEADER_VECTOR_H
 #define	XC_HEADER_VECTOR_H
 
+#define global true
+#define local false
 // TODO Insert appropriate #include <>
 
 #include <stdio.h>
@@ -18,10 +20,15 @@
 #include <math.h>
 
 //object oriented c
+extern int countVector;
 
 typedef struct Vector3f
 {
     float x,y,z;
+
+	int thisVectorAddress;
+
+	bool globalVector;
     
     //struct Vector3f *(*v_constructor)(struct Vector3f*v, float x, float y, float z);
 
@@ -43,7 +50,7 @@ typedef struct Vector3f
 }Vector3f;
 
 // TODO Insert declarations
-Vector3f *v_constructor(Vector3f*v, float x, float y, float z);
+Vector3f *v_constructor(bool globalVector, Vector3f*v, float x, float y, float z);
 
 void v_destructor(Vector3f*v, bool dynamic);
 
